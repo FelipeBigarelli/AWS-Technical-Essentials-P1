@@ -87,5 +87,9 @@
 # Interagindo com a AWS
 - 3 principais meios de interagir com a AWS API:
   - AWS Management Console
-  - AWS Command Line Interface
+  - AWS Command Line Interface: com scripts, consegue-se buscar uma lista de Buckets 
   - AWS Software Develompent Kits (SDK's)
+ ***
+
+# Segurança e o modelo de responsabilidade compartilhada da AWS
+- Ambos clientes e a AWS tem responsabilidade sobre a segurança da aplicação
