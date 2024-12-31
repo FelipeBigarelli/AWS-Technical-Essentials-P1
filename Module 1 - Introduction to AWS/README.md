@@ -93,3 +93,16 @@
 
 # Segurança e o modelo de responsabilidade compartilhada da AWS
 - Ambos clientes e a AWS tem responsabilidade sobre a segurança da aplicação
+![AWS_Security](/Module%201%20-%20Introduction%20to%20AWS/Assets/AWS_Shared_Responsibility_Model.png)
+
+###### Responsabilidade da AWS
+- Segurança da nuvem: protege e assegura a infraestrutura que executa serviços oferecidos na Nuvem AWS
+
+###### Responsabilidade do cliente
+- Responsável por configurar adequadamente o serviço e seus aplicativos, além de garantir que seus daods estejam seguros
+- Nível de responsabilidade: depende do serviço da AWS
+- Clientes: mantêm controle total de seus dados e são responsáveis por gerenciar a segurança relacionada ao seu conteúdo:
+  - escolha de região
+  - implementar mecanismos de proteção de dados (criptografia e backups agendados)
+  - controle de acesso para limitar quem pode acessar seus dados e recursos da AWS
+  
