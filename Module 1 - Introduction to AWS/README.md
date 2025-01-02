@@ -105,4 +105,109 @@
   - escolha de região
   - implementar mecanismos de proteção de dados (criptografia e backups agendados)
   - controle de acesso para limitar quem pode acessar seus dados e recursos da AWS
+***
+
+# Protegendo o usuário raiz da AWS
+- Usuário raiz tem 2 conjunto de credenciais:
+  - E-mail e senha
+  - Chaves de acesso (ID da chave de acesso e Chave de acesso secreta): permite fazer solicitações programáticas da AWS CLI ou API
+***
+
+# Gerenciamento de identidade e acesso da AWS
+## O que é IAM?
+- AWS Identity and Acess Management (IAM): serviço da AWS que ajuda a gerenciar o acesso à sua conta e recursos da AWS
+
+## Recursos do IAM
+- 6 categorias para controlar acesso e gerenciar identidades na sua conta da AWS:
+  - Global
+  - Integrado com serviços AWS
+  - Acesso compartilhado
+  - Autenticação multifatorial
+  - Federação de identidade
+  - Livre para usar
+
+## Usuário IAM
+- Representa pessoa ou serviço que interage com a AWS
+- Definindo um usuário na conta AWS, qualquer atividade é cobrada na conta e este usuário pode fazer login para obter acesso aos recursos da AWS dentro da conta
+- Cada pessoa deve ter as próprias credenciais de login para evitar o compartilhamento de credenciais
+- Consiste em nome e conjunto de credenciais
+- Pode fornecer a ele os acessos:
+  - AWS Management Console
+  - Acesso programático à AWS CLI e à AWS API
+
+## Grupos IAM
+- Coleção de usuários
+- Todos usuários do grupo herdam permissões atribuídas ao grupo
+
+## Políticas de IAM
+- É uma maneira de conceder permissões no IAM
+- Gerenciar o acesso e fornecer permissões aos serviços e recursos da AWS -> criar políticas do IAM e anexá-las em uma identidade do IAM
+- Identidade do IAM faz solicitação -> AWS avalia políticas associadas a ela
+  - **Ex 1:** fornecer acesso de administrador 
+    ``` 
+    {
+      "Version": "2012-10-17",
+      "Statement": [{
+        "Effect": "Allow",
+        "Action": "*",
+        "Resource": "*"
+      }]
+    }
+    ```
+      - **Effect:** especifica se a política permite ou nega o acesso
+      - **Action:** descreve o tipo de ação que permite ou nega
+      - **Resource:** especifica objeto(s) que a declaração de política abrange. o "*" representa permissão em todos os recursos
   
+  - **Ex 2:** bloqueia acesso às ações do Amazon S3, ao menos que esteja sendo acessado pela conta 222222222222 
+    ``` 
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Sid": "DenyS3AccessOutsideMyBoundary",
+          "Effect": "Deny",
+          "Action": [
+            "s3:*"
+          ],
+          "Resource": "*",
+          "Condition": {
+            "StringNotEquals": {
+              "aws:ResourceAccount": [
+                "222222222222"
+              ]
+            }
+          }
+        }
+      ]
+    }
+    ```
+
+## Funções do IAM
+- Permissões que users podem ter
+
+## Melhores práticas de IAM
+###### Bloqueie o usuário root da AWS:
+- Não compartilhar credenciais associadas ao user root
+- Considerar excluir chaves de acesso 
+- Ativar MFA na conta raiz
+
+###### Princípio do menor privilégio
+- Princípio de segurança padrão
+- Aconselha a conceder apenas permissões necessárias para fazer um trabalho especifico e nada mais
+- Comecar com um conjunto mínimo de permissões em uma política IAM e conceder adicionais conforme necessário para um user, grupo ou função
+
+###### Use o IAM adequadamente
+- Não é usado para autenticação e autorização de sites nem oferece suporte a controles de segurança para proteger sistemas operacionais e redes
+
+###### Use funções do IAM quando possível
+- Manter funções é mais eficiente que manter usuários
+- Assumir função -> IAM fornece credenciais temporárias
+
+###### Considere usar provedor de identidade
+- Se o app começar a ter mais gente trabalhando nele, considerar gerenciar informações de identidade de funcionários por meio de um provedor de identidade (IdP)
+- Usar IdP fornece uma única fonte de verdade para todas as identidades na organização
+- Não é mais preciso criar usuários IAM separados na AWS  -> pode usar funções IAM para fornecer permissões a identidades que são federadas do seu IdP (processo que permite transferência de informações de identidade e autenticação em um conjnto de sistemas em rede)
+  - Ex: Felipe tem acesso a várias contas da AWS -> pode gerenciar uma conta Felipe no IdP da empresa em vez de ter vários usuários do IAM chamando Felipe em cada uma das contas
+
+###### Revise e remova regularmente usuários, funções e outras credenciais não utilizadas
+- IAM fornece informações de último acesso para ajudar a identificar credenciais irrelevantes para poder removê-las -> ajuda a reduzir usuários, funções, permissões, políticas e credenciais que precisa monitorar
