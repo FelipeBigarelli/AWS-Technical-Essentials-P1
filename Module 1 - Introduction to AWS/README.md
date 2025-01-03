@@ -12,7 +12,7 @@
 
 - **Local:**
   - empresas hospedavam e mantinham hardware como equipamentos de computação, armazenamento e rede nos próprios data centers
-  - departamentos inteiros de infraestrutira para cuidar dos data centers: gerava operações custosas -> surge a CN
+  - departamentos inteiros de infraestrutura para cuidar dos data centers: gerava operações custosas -> surge a CN
 
 - **Nuvem:**
   - entrega sob demanda com preços pay-as-you-go
@@ -211,3 +211,15 @@
 
 ###### Revise e remova regularmente usuários, funções e outras credenciais não utilizadas
 - IAM fornece informações de último acesso para ajudar a identificar credenciais irrelevantes para poder removê-las -> ajuda a reduzir usuários, funções, permissões, políticas e credenciais que precisa monitorar
+***
+
+# Resumo informações IAM e Hosteando o Employee Directory App na AWS
+- **IAM:** recursos para políticas/regras para o app
+- **EC2 (Elastic Compute Cloud):** serviço AWS que fornece capacidade computacional escalável na nuvem
+- **VPC (Virtual Private Cloud):** rede virtual configurada dentro da AWS. Funciona como ambiente isolado que pode controlar:
+  - Sub-redes (subnets)
+  - Regras de firewall (grupos de segurança)
+  - Endereços IP públicos e privados
+- **Instância EC2:** é uma VM que se pode configurar, iniciar, parar e terminar dentro da infraestrutura da AWS
+- **Employee Directory (Diretório de Funcionários):** aplicação para organizar e facilitar acesso às informações sobre funcionários  
+- **Hosting Employee Directory:** hospedar esse tipo de app em servidor na nuvem usando AWS EC2
